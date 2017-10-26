@@ -43,6 +43,10 @@ public class SplashActivity extends AppCompatActivity {
     private void initNavigation() {
         // todo determine where to go
         // if have registered user go to login, otherwise goto registration
+        navigateRegistration();
+        Intent intent = new Intent(this, RegisterActivity.class);
+        startActivity(intent);
+        SplashActivity.this.finish();
     }
 
     private void navigateSplash() {
