@@ -24,7 +24,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private EditText usernameEditText;
     private EditText passwordEditText;
-    // todo add confirmPasswordEditText
+    private EditText confirmPasswordEditText;
 
     private Button registerButton;
     private Typeface typeface;
@@ -40,38 +40,59 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void initUi() {
         usernameEditText = (EditText) findViewById(R.id.username);
-        // todo init other edit texts
+        passwordEditText = (EditText) findViewById(R.id.password);
+        confirmPasswordEditText = (EditText) findViewById(R.id.confirm_password);
 
         usernameEditText.setTypeface(typeface);
-        // todo set font for other edit texts
+        passwordEditText.setTypeface(typeface);
+        confirmPasswordEditText.setTypeface(typeface);
 
         registerButton = (Button) findViewById(R.id.register_button);
-        // todo set on click listener for button
+        registerButton.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        doRegister();
+                    }
+                }
+        );
     }
 
     private void doRegister() {
         String username = usernameEditText.getText().toString().trim();
         String password = passwordEditText.getText().toString().trim();
-        // todo get text of confirm password edit text
-        String confirmPassword = "";
+        String confirmPassword = confirmPasswordEditText.getText().toString().trim();
 
-        // todo add log of username and password
-        // todo display toast with username and password
+        Log.i("Password", "User name is " + username + " and password is : " + password);
+        Toast.makeText(this, ("U " + username + " : P " + password), Toast.LENGTH_LONG).show();
 
         if (username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
             Toast.makeText(this, "Invalid input fields", Toast.LENGTH_LONG).show();
         } else if (!password.equalsIgnoreCase(confirmPassword)) {
             Toast.makeText(this, "Mismatching passwords", Toast.LENGTH_LONG).show();
         } else {
-            // todo get sha256 hash of the password
+            String hashedPassword = null;
+            try {
+                hashedPassword = CryptoUtil.hashSHA256(password);
+            } catch (NoSuchAlgorithmException e) {
+                Log.e("Register : ", e.getMessage());
+            }
 
             // todo create user with hashed password
-
+            User user = new User(username, hashedPassword);
             // todo save users(username and hashed password) in shared preference via PreferenceUtil, or write your own util
-
+            PreferenceUtil.saveUser(this, user);
             // todo [wait till learning key generation and encryption] initialize rsa key pair
+            try {
+                CryptoUtil.initRSAKeyPair(this);
+            } catch (NoSuchProviderException e) {
+                Log.e("Register : ", e.getMessage());
+            } catch (NoSuchAlgorithmException e) {
+                Log.e("Register : ", e.getMessage());
+            }
 
             // todo navigate to home
+            navigateHome();
         }
     }
 

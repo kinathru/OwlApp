@@ -43,12 +43,12 @@ public class SplashActivity extends AppCompatActivity {
     private void initNavigation() {
         // todo determine where to go
         // if have registered user go to login, otherwise goto registration
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        navigateRegistration();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                navigateRegistration();
+            }
+        }, SPLASH_DISPLAY_LENGTH);
     }
 
     private void navigateSplash() {

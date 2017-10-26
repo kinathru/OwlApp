@@ -67,9 +67,22 @@
                 android:textColorHint="@color/clouds"
                 android:textSize="25sp" />
 
-            <!--
-                todo add confirm password exit text under password
-            -->
+            <EditText
+                android:id="@+id/confirm_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="false"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"
+                android:layout_marginTop="40dp"
+                android:background="@drawable/border_bottom"
+                android:hint="Confirm Password"
+                android:inputType="textPassword"
+                android:maxLines="1"
+                android:textColor="@color/android_grey"
+                android:textColorHint="@color/clouds"
+                android:textSize="25sp" />
 
             <FrameLayout
                 android:layout_width="match_parent"
