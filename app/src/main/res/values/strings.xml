@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Owl</string>
+    <string name="preference_file">com.score.owl.preference</string>
+</resources>
