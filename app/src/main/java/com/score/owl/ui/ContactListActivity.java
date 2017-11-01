@@ -82,6 +82,8 @@ public class ContactListActivity extends AppCompatActivity {
         expenseListView.setTextFilterEnabled(false);
 
         // todo fill sample data to contact list
+        expenseList = new ArrayList<>();
+        expenseList.add(new Contact("kinath", "0715735385"));
 
         // todo[wait till learning db] load contacts list from db
 

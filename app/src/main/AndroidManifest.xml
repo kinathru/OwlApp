@@ -23,9 +23,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
-        <!--
-            todo add login activity here
-        -->
+        <activity
+            android:name="com.score.owl.ui.LoginActivity"
+            android:label="Owl"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
         <activity
             android:name="com.score.owl.ui.ContactListActivity"

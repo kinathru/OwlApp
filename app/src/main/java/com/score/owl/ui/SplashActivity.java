@@ -43,12 +43,19 @@ public class SplashActivity extends AppCompatActivity {
     private void initNavigation() {
         // todo determine where to go
         // if have registered user go to login, otherwise goto registration
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                navigateRegistration();
-            }
-        }, SPLASH_DISPLAY_LENGTH);
+
+        if (PreferenceUtil.getUser(this) != null)
+        {
+            navigateLogin();
+        }
+        else {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    navigateRegistration();
+                }
+            }, SPLASH_DISPLAY_LENGTH);
+        }
     }
 
     private void navigateSplash() {
@@ -63,7 +70,10 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     public void navigateLogin() {
-        // todo go to login
+        Intent intent = new Intent(this, LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        SplashActivity.this.finish();
     }
 
     public void navigateHome() {
