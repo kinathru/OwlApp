@@ -59,14 +59,30 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(this, "Invalid input fields", Toast.LENGTH_LONG).show();
         } else {
             // todo get registered user
+            User user = PreferenceUtil.getUser(this);
 
             // todo get SHA256 hash of password
+            String hasedPwd = null;
+            try {
+                hasedPwd = CryptoUtil.hashSHA256(password);
+            } catch (NoSuchAlgorithmException e) {
+                Log.e("Login : ", e.getMessage());
+            }
 
             // todo log registered user's password hash and new password hash
+            String savedPwd = user.getPassword();
 
             // todo compare username and password with registered users username and password
-
-            // todo for valid login navigate to home
+            if (hasedPwd != null && savedPwd != null && savedPwd.equals(hasedPwd))
+            {
+                // todo for valid login navigate to home
+                navigateHome();
+            }
+            else
+            {
+                Log.e("Login : ", "Wrong user name or password ");
+                Toast.makeText(this, "Wrong username or password", Toast.LENGTH_LONG).show();
+            }
         }
     }
 
