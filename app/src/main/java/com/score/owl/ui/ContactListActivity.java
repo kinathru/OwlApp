@@ -97,6 +97,10 @@ public class ContactListActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // todo[wait till learning db and encryption] go to view contact activity
                 Log.e("Contact : ", "user clicked on item");
+                Intent intent = new Intent(ContactListActivity.this, ViewContactActivity.class);
+                Contact contact = expenseList.get(position);
+
+                ContactListActivity.this.startActivity(intent);
             }
         });
     }

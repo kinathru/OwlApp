@@ -89,9 +89,28 @@ public class ViewContactActivity extends AppCompatActivity {
             String username = getIntent().getStringExtra("USERNAME");
             nameEditText.setText(contact.getName());
 
-            // togo get contact with given username from db
+            // get contact with given username from db
+            ContactDbSource contactDbSource = new ContactDbSource(this);
+            Contact contact = contactDbSource.getContact(username);
 
-            // todo decrypt phone and show in phone no
+            // decrypt phone and show in phone no
+            String decryptedPhone = null;
+            try {
+                decryptedPhone = CryptoUtil.decryptRSA(this, contact.getPhone());
+            } catch (NoSuchPaddingException e) {
+                e.printStackTrace();
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            } catch (InvalidKeyException e) {
+                e.printStackTrace();
+            } catch (BadPaddingException e) {
+                e.printStackTrace();
+            } catch (IllegalBlockSizeException e) {
+                e.printStackTrace();
+            } catch (InvalidKeySpecException e) {
+                e.printStackTrace();
+            }
+            phoneEditText.setText(decryptedPhone);
         }
     }
 

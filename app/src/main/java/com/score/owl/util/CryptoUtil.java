@@ -97,9 +97,12 @@ public class CryptoUtil {
         // load private key
         PrivateKey privateKey = CryptoUtil.getPrivateKey(context);
 
-        // todo decrypt
-        // todo decode base64 and return
-        return payload;
+        // decrypt
+        Cipher cipher = Cipher.getInstance("RSA");
+        // decode base64 and return
+        cipher.init(Cipher.DECRYPT_MODE, privateKey);
+        byte[] data = Base64.decode(payload, Base64.DEFAULT);
+        return new String(cipher.doFinal(data));
     }
 
     public static void initAESSecretKey(Context context) throws NoSuchAlgorithmException {

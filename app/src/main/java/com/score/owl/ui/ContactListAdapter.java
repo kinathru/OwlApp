@@ -10,8 +10,18 @@ import android.widget.TextView;
 
 import com.score.owl.R;
 import com.score.owl.pojo.Contact;
+import com.score.owl.util.CryptoUtil;
 
+import org.w3c.dom.Text;
+
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 
 /**
  * Display expense list
@@ -88,10 +98,12 @@ public class ContactListAdapter extends BaseAdapter {
             view = layoutInflater.inflate(R.layout.contact_list_row_layout, parent, false);
             holder = new ViewHolder();
             holder.name = (TextView) view.findViewById(R.id.contact_list_row_layout_name);
-            // todo init phone
+            // init phone
+            holder.phone = (TextView)view.findViewById(R.id.contact_list_row_layout_phone);
 
             holder.name.setTypeface(typeface, Typeface.NORMAL);
-            // todo set custom font for phone
+            // set custom font for phone
+            holder.phone.setTypeface(typeface, Typeface.NORMAL);
 
             view.setTag(holder);
         } else {
@@ -101,7 +113,25 @@ public class ContactListAdapter extends BaseAdapter {
 
         // bind text with view holder content view for efficient use
         holder.name.setText(expense.getName());
-        // todo set text for phone
+        // set text for phone
+        String decryptedPhone = null;
+        try {
+            decryptedPhone = CryptoUtil.decryptRSA(view.getContext(), expense.getPhone());
+        } catch (NoSuchPaddingException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (InvalidKeyException e) {
+            e.printStackTrace();
+        } catch (BadPaddingException e) {
+            e.printStackTrace();
+        } catch (IllegalBlockSizeException e) {
+            e.printStackTrace();
+        } catch (InvalidKeySpecException e) {
+            e.printStackTrace();
+        }
+
+        holder.phone.setText(decryptedPhone);
 
         return view;
     }

@@ -78,11 +78,11 @@ public class RegisterActivity extends AppCompatActivity {
                 Log.e("Register : ", e.getMessage());
             }
 
-            // todo create user with hashed password
+            // create user with hashed password
             User user = new User(username, hashedPassword);
-            // todo save users(username and hashed password) in shared preference via PreferenceUtil, or write your own util
+            // save users(username and hashed password) in shared preference via PreferenceUtil, or write your own util
             PreferenceUtil.saveUser(this, user);
-            // todo [wait till learning key generation and encryption] initialize rsa key pair
+            // [wait till learning key generation and encryption] initialize rsa key pair
             try {
                 CryptoUtil.initRSAKeyPair(this);
             } catch (NoSuchProviderException e) {
@@ -91,7 +91,7 @@ public class RegisterActivity extends AppCompatActivity {
                 Log.e("Register : ", e.getMessage());
             }
 
-            // todo navigate to home
+            // navigate to home
             navigateHome();
         }
     }

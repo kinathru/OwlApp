@@ -110,8 +110,12 @@ public class NewContactActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-            Contact contact = new Contact(name,phone);
-            contact.setDigsig(encryptedPhone);
+            Contact contact = new Contact(name,encryptedPhone);
+            try {
+                contact.setDigsig(CryptoUtil.hashSHA256(encryptedPhone));
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            }
 
             contactDbSource.createContact(contact);
             // exit from activity
