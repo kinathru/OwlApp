@@ -1,5 +1,6 @@
 package com.score.owl.ui;
 
+import android.content.Intent;
 import android.database.SQLException;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -86,12 +87,43 @@ public class NewContactActivity extends AppCompatActivity {
         if (name.isEmpty() || phone.isEmpty()) {
             Toast.makeText(this, "Invalid input fields", Toast.LENGTH_LONG).show();
         } else {
-            // todo create contact via db source
+            // create contact via db source
+            ContactDbSource contactDbSource = new ContactDbSource(this);
 
-            // todo [wait till learning encryption] encrypt phone no with RSA
+            // [wait till learning encryption] encrypt phone no with RSA
+            String encryptedPhone = null;
+            try {
+                encryptedPhone = CryptoUtil.encryptRSA(this, phone);
+            } catch (InvalidKeySpecException e) {
+                e.printStackTrace();
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            } catch (NoSuchProviderException e) {
+                e.printStackTrace();
+            } catch (InvalidKeyException e) {
+                e.printStackTrace();
+            } catch (NoSuchPaddingException e) {
+                e.printStackTrace();
+            } catch (BadPaddingException e) {
+                e.printStackTrace();
+            } catch (IllegalBlockSizeException e) {
+                e.printStackTrace();
+            }
 
-            // todo exit from activity
+            Contact contact = new Contact(name,phone);
+            contact.setDigsig(encryptedPhone);
+
+            contactDbSource.createContact(contact);
+            // exit from activity
+            navigateHome();
         }
+    }
+
+    public void navigateHome() {
+        Intent intent = new Intent(this, ContactListActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        this.finish();
     }
 
 }

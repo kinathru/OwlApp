@@ -58,10 +58,10 @@ public class LoginActivity extends AppCompatActivity {
         if (username.isEmpty() || password.isEmpty()) {
             Toast.makeText(this, "Invalid input fields", Toast.LENGTH_LONG).show();
         } else {
-            // todo get registered user
+            // get registered user
             User user = PreferenceUtil.getUser(this);
 
-            // todo get SHA256 hash of password
+            // get SHA256 hash of password
             String hasedPwd = null;
             try {
                 hasedPwd = CryptoUtil.hashSHA256(password);
@@ -69,13 +69,13 @@ public class LoginActivity extends AppCompatActivity {
                 Log.e("Login : ", e.getMessage());
             }
 
-            // todo log registered user's password hash and new password hash
+            // log registered user's password hash and new password hash
             String savedPwd = user.getPassword();
 
-            // todo compare username and password with registered users username and password
+            // compare username and password with registered users username and password
             if (hasedPwd != null && savedPwd != null && savedPwd.equals(hasedPwd))
             {
-                // todo for valid login navigate to home
+                // for valid login navigate to home
                 navigateHome();
             }
             else

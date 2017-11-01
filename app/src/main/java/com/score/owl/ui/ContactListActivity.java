@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -81,11 +82,12 @@ public class ContactListActivity extends AppCompatActivity {
         expenseListView = (ListView) findViewById(R.id.list);
         expenseListView.setTextFilterEnabled(false);
 
-        // todo fill sample data to contact list
+        // fill sample data to contact list
         expenseList = new ArrayList<>();
-        expenseList.add(new Contact("kinath", "0715735385"));
 
-        // todo[wait till learning db] load contacts list from db
+        // [wait till learning db] load contacts list from db
+        ContactDbSource contactDbSource = new ContactDbSource(this);
+        expenseList.addAll(contactDbSource.getContacts());
 
         contactListAdapter = new ContactListAdapter(this, expenseList);
         expenseListView.setAdapter(contactListAdapter);
@@ -94,6 +96,7 @@ public class ContactListActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // todo[wait till learning db and encryption] go to view contact activity
+                Log.e("Contact : ", "user clicked on item");
             }
         });
     }

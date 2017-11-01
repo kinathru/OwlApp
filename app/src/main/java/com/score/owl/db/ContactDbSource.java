@@ -56,6 +56,7 @@ public class ContactDbSource {
             String username = cursor.getString(cursor.getColumnIndex(ContactDbContract.Contact.COLUMN_NAME_USERNAME));
             String phone = cursor.getString(cursor.getColumnIndex(ContactDbContract.Contact.COLUMN_NAME_PHONE));
             // todo[wait till learn digital signature] get digsig
+            String digsig = cursor.getString(cursor.getColumnIndex(ContactDbContract.Contact.COLUMN_NAME_DIGSIG));
 
             contactsList.add(new Contact(username, phone));
         }
@@ -104,6 +105,7 @@ public class ContactDbSource {
         values.put(ContactDbContract.Contact.COLUMN_NAME_USERNAME, contact.getName());
         values.put(ContactDbContract.Contact.COLUMN_NAME_PHONE, contact.getPhone());
         // todo put digsig
+        values.put(ContactDbContract.Contact.COLUMN_NAME_DIGSIG, contact.getDigsig());
 
         // insert the new row, if fails throw an error
         return db.insertOrThrow(ContactDbContract.Contact.TABLE_NAME, null, values);
